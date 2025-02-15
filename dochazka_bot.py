@@ -13,9 +13,17 @@ TELEGRAM_BOT_TOKEN = "7604445726:AAGN3ePh5JFe9bNrcwJByRD_FFxZ5XH7sMc"
 SHEET_ID = "1-SxNlaML9aZICfCgN_ZX9UK_xuUEEwP0DmCYwl2_tPI"
 
 # Připojení k Google Sheets
-CREDENTIALS_FILE = "service_account.json"
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
-creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=SCOPES)
+import json
+import os
+
+# Načítáme JSON přímo z proměnné prostředí
+CREDENTIALS_JSON = os.getenv("CREDENTIALS_JSON")
+
+if CREDENTIALS_JSON:
+    creds_info = json.loads(CREDENTIALS_JSON)
+    creds = Credentials.from_service_account_info(creds_info, scopes=SCOPES)
+else:
+    raise ValueError("❌ CREDENTIALS_JSON není nastaveno!")
 client = gspread.authorize(creds)
 sheet = client.open_by_key(SHEET_ID).sheet1
 
