@@ -15,6 +15,10 @@ SHEET_ID = "1-SxNlaML9aZICfCgN_ZX9UK_xuUEEwP0DmCYwl2_tPI"
 # Připojení k Google Sheets
 import json
 import os
+from google.oauth2.service_account import Credentials
+
+# Definujeme SCOPES
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 # Načítáme JSON přímo z proměnné prostředí
 CREDENTIALS_JSON = os.getenv("CREDENTIALS_JSON")
